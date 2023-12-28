@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="710.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.kursovavisual.Controller">
+  <children>
+    <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+      <tabs>
+        <Tab text="Вступ">
+          <content>
+            <AnchorPane centerShape="false" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+               <Button layoutX="670.0" layoutY="391.0" mnemonicParsing="false" onAction="#enterDataFromUser" prefHeight="68.0" prefWidth="163.0" text="Ввести" />
+               <TextField fx:id="textFiledForNumVertex" layoutX="668.0" layoutY="319.0" prefHeight="42.0" prefWidth="166.0" />
+               <Text layoutX="597.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введіть максимальну кількість вершин" wrappingWidth="327.33009338378906">
+                 <font>
+                   <Font size="18.0" />
+                 </font></Text>
+                <Label fx:id="textToUser" layoutX="670.0" layoutY="275.0" prefHeight="26.0" prefWidth="164.0" />
+                <Text layoutX="287.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ласкаво прошу до програми!" wrappingWidth="395.53668212890625">
+                  <font>
+                    <Font size="27.0" />
+                  </font></Text>
+                <Text layoutX="42.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дана прогрма призначення для порівняння двох алгоритмів:" wrappingWidth="377.5160369873047">
+                  <font>
+                    <Font size="24.0" />
+                  </font>
+                </Text>
+                <Text layoutX="42.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Алгоритм Тар'яна">
+                  <font>
+                    <Font size="24.0" />
+                  </font>
+                </Text>
+                <Text layoutX="42.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Алгоритм &quot;Грубого перебору&quot;">
+                  <font>
+                    <Font size="24.0" />
+                  </font>
+                </Text>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab text="графік двох алгоритмів">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="422.0" prefWidth="657.0">
+              <children>
+                <LineChart fx:id="lineChartForTwoAlgo" layoutX="6.0" prefHeight="682.0" prefWidth="994.0" title="Два алгоритми">
+                  <xAxis>
+                    <CategoryAxis side="BOTTOM" fx:id="xForTwoAlgo" />
+                  </xAxis>
+                  <yAxis>
+                    <NumberAxis fx:id="yForTwoAlgo" side="LEFT" />
+                  </yAxis>
+                </LineChart>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab text="Tarjans">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <LineChart fx:id="lineChartForTarjan" prefHeight="681.0" prefWidth="1000.0" title="Tarjan`s Algorithm">
+                  <xAxis>
+                    <CategoryAxis side="BOTTOM" fx:id="xForTarjan" />
+                  </xAxis>
+                  <yAxis>
+                    <NumberAxis fx:id="yForTarjan" side="LEFT" />
+                  </yAxis>
+                </LineChart>
+              </children></AnchorPane>
+          </content>
+        </Tab>
+        <Tab text="Brute Force">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <LineChart fx:id="lineCharForBruteForce" prefHeight="682.0" prefWidth="1000.0" title="Brute Force">
+                  <xAxis>
+                    <CategoryAxis side="BOTTOM" fx:id="xForBruteForce" />
+                  </xAxis>
+                  <yAxis>
+                    <NumberAxis fx:id="yForBruteForce" side="LEFT" />
+                  </yAxis>
+                </LineChart>
+              </children></AnchorPane>
+          </content>
+        </Tab>
+        <Tab text="Таблиця з часовими характеристиками">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <TableView fx:id="tableInfo" layoutY="7.0" prefHeight="674.0" prefWidth="1000.0">
+                  <columns>
+                    <TableColumn fx:id="numVertex" prefWidth="196.8000122308731" text="Кількість вершин" />
+                    <TableColumn fx:id="numArticulationPoint" prefWidth="222.40003967285156" text="Кількість шарнірних елементів" />
+                    <TableColumn fx:id="timeTarjans" prefWidth="283.99993896484375" text="Алгоритм Тар'яна(наносекунди)" />
+                    <TableColumn fx:id="timeBrudeForce" prefWidth="290.40008544921875" text="Грубого перебору(наносекунди)" />
+                  </columns>
+                </TableView>
+              </children></AnchorPane>
+          </content>
+        </Tab>
+        <Tab text="Таблиця з кількістю операцій">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <TableView fx:id="infoOperations" layoutY="-1.0" prefHeight="683.0" prefWidth="1000.0">
+                  <columns>
+                    <TableColumn fx:id="numVertex2" prefWidth="68.0" text="Кількість вершин" />
+                    <TableColumn fx:id="numAssignmentTarjan" prefWidth="136.0" text="Кількість = Тар'яна" />
+                    <TableColumn fx:id="numAssignmentBruteForce" minWidth="6.0" prefWidth="143.0" text="Кількість = Грубий перебір" />
+                    <TableColumn fx:id="numComparisonTarjan" prefWidth="149.0" text="Кількість порівнянь Тар'ян" />
+                    <TableColumn fx:id="numComparisonBruteForce" prefWidth="168.0" text="Кількість порівнянь Грубої сили" />
+                    <TableColumn fx:id="sumTarjan" prefWidth="154.0" text="Зально в Тар'яна" />
+                    <TableColumn fx:id="sumBruteForce" prefWidth="181.0" text="Загально в грубому переборі" />
+                  </columns>
+                </TableView>
+              </children></AnchorPane>
+          </content>
+        </Tab>
+      </tabs>
+    </TabPane>
+  </children>
+</StackPane>
