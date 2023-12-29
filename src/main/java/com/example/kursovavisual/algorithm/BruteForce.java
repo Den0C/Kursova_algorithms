@@ -1,4 +1,4 @@
-package com.example.kursovavisual.algo;
+package com.example.kursovavisual.algorithm;
 
 import java.util.ArrayList;
 import java.util.List;

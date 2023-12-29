@@ -1,16 +1,36 @@
-package com.example.kursovavisual;
+package com.example.kursovavisual.data;
 
 public class AlgorithmData {
     private int numVertices;
     private int numArticulationPoint;
     private long timeTarjan;
     private long timeBruteForce;
+    private double timeTarjanMilliSec;
+    private double timeBruteForceMilliSec;
 
-    public AlgorithmData(int numVertices,int numArticulationPoint, long timeTarjan, long timeBruteForce) {
+    public AlgorithmData(int numVertices, int numArticulationPoint, long timeTarjan, long timeBruteForce) {
         this.numVertices = numVertices;
         this.numArticulationPoint = numArticulationPoint;
         this.timeTarjan = timeTarjan;
         this.timeBruteForce = timeBruteForce;
+        this.timeBruteForceMilliSec = (double) timeBruteForce / 1000000;
+        this.timeTarjanMilliSec = (double) timeTarjan / 1000000;
+    }
+
+    public double getTimeTarjanMilliSec() {
+        return timeTarjanMilliSec;
+    }
+
+    public void setTimeTarjanMilliSec(double timeTarjanMilliSec) {
+        this.timeTarjanMilliSec = timeTarjanMilliSec;
+    }
+
+    public double getTimeBruteForceMilliSec() {
+        return timeBruteForceMilliSec;
+    }
+
+    public void setTimeBruteForceMilliSec(double timeBruteForceMilliSec) {
+        this.timeBruteForceMilliSec = timeBruteForceMilliSec;
     }
 
     public int getNumVertices() {

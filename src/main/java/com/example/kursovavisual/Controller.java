@@ -1,20 +1,18 @@
 package com.example.kursovavisual;
 
-import java.net.URL;
 import java.util.*;
 
-import com.example.kursovavisual.algo.BruteForce;
-import com.example.kursovavisual.algo.TarjanAlgo;
+import com.example.kursovavisual.algorithm.BruteForce;
+import com.example.kursovavisual.algorithm.Graph;
+import com.example.kursovavisual.algorithm.TarjanAlgo;
+import com.example.kursovavisual.data.AlgorithmData;
+import com.example.kursovavisual.data.OperationData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-
-import java.util.ResourceBundle;
 
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -44,6 +42,12 @@ public class Controller {
 
     @FXML
     private TableColumn<AlgorithmData, Long> timeTarjans;
+
+    @FXML
+    private TableColumn<?, ?> timeBrudeForceMilliSec;
+
+    @FXML
+    private TableColumn<?, ?> timeTarjansMilliSec;
 
     @FXML
     private TextField textFiledForNumVertex;
@@ -78,11 +82,13 @@ public class Controller {
 
     @FXML
     void enterDataFromUser(ActionEvent event) {
-        System.out.println(textFiledForNumVertex.getText());
         int enteredNum = checkToStartProgram(textFiledForNumVertex.getText());
 
         if (enteredNum > 0) startAlgorithms(enteredNum);
         else textToUser.setText("Ви ввели некоректні дані!");
+    }
+    @FXML
+    void initialize() {
     }
 
     private int checkToStartProgram(String string) {
@@ -107,13 +113,15 @@ public class Controller {
         List<AlgorithmData> dataList = new ArrayList<>();
         List<OperationData> dataListForOperation = new ArrayList<>();
 
-        for (int k = 3; k <= num; k++) {
+        Graph graph = new Graph();
+        boolean decreaseLine = num < 20;
+
+        for (int numVertices = 3; numVertices <= num; numVertices++) {
 
             BruteForce bruteForce = new BruteForce();
             TarjanAlgo tarjanAlgo = new TarjanAlgo();
-            int numVertices = k;
 
-            List<Integer>[] graph1 = generateConnectedGraph(numVertices);
+            List<Integer>[] graph1 = graph.generateConnectedGraph(numVertices);
 
             boolean[] visited1 = new boolean[numVertices];
             Arrays.fill(visited1, false);
@@ -141,18 +149,19 @@ public class Controller {
             long endTimeB = System.nanoTime();
             long elapsedTimeB = endTimeB - startTimeB;
 
-            if (k % 10 == 0) {
-                series.getData().add(new XYChart.Data<>(String.valueOf(k), elapsedTimeT));
-                series1.getData().add(new XYChart.Data<>(String.valueOf(k), elapsedTimeB));
-                seriesTarjan.getData().add(new XYChart.Data<>(String.valueOf(k), elapsedTimeT));
-                seriesBruteForce.getData().add(new XYChart.Data<>(String.valueOf(k), elapsedTimeB));
+
+            if (numVertices % 10 == 0 || decreaseLine) {
+                series.getData().add(new XYChart.Data<>(String.valueOf(numVertices), (double) elapsedTimeT/ 1000000));
+                series1.getData().add(new XYChart.Data<>(String.valueOf(numVertices), (double) elapsedTimeB/ 1000000));
+                seriesTarjan.getData().add(new XYChart.Data<>(String.valueOf(numVertices), (double) elapsedTimeT/ 1000000));
+                seriesBruteForce.getData().add(new XYChart.Data<>(String.valueOf(numVertices), (double) elapsedTimeB/ 1000000));
 
             }
 
-            AlgorithmData data = new AlgorithmData(k, resultT.size(), elapsedTimeT, endTimeT);
+            AlgorithmData data = new AlgorithmData(numVertices, resultT.size(), elapsedTimeT, endTimeT);
             dataList.add(data);
 
-            OperationData operationData = new OperationData(k, tarjanAlgo.getAssignmentCount(), bruteForce.getAssignmentCount(),
+            OperationData operationData = new OperationData(numVertices, tarjanAlgo.getAssignmentCount(), bruteForce.getAssignmentCount(),
                     tarjanAlgo.getComparisonCount(), bruteForce.getComparisonCount());
             dataListForOperation.add(operationData);
 
@@ -164,10 +173,6 @@ public class Controller {
 
         dataForTable(dataList);
         dataForOperationTable(dataListForOperation);
-    }
-
-    @FXML
-    void initialize() {
     }
 
     private void printLineCharForTwoAlgo(XYChart.Series series, XYChart.Series series1) {
@@ -195,6 +200,8 @@ public class Controller {
         numArticulationPoint.setCellValueFactory(new PropertyValueFactory<>("numArticulationPoint"));
         timeTarjans.setCellValueFactory(new PropertyValueFactory<>("timeTarjan"));
         timeBrudeForce.setCellValueFactory(new PropertyValueFactory<>("timeBruteForce"));
+        timeTarjansMilliSec.setCellValueFactory(new PropertyValueFactory<>("timeTarjanMilliSec"));
+        timeBrudeForceMilliSec.setCellValueFactory(new PropertyValueFactory<>("timeBruteForceMilliSec"));
 
         ObservableList<AlgorithmData> observableData = FXCollections.observableArrayList(dataList);
         tableInfo.setItems(observableData);
@@ -211,66 +218,6 @@ public class Controller {
 
         ObservableList<OperationData> observableData = FXCollections.observableArrayList(dataList);
         infoOperations.setItems(observableData);
-    }
-
-    private void addEdge(List<Integer>[] graph, int u, int v) {
-        graph[u].add(v);
-        graph[v].add(u);
-    }
-
-    private List<Integer>[] generateConnectedGraph(int numVertices) {
-        List<Integer>[] graph;
-        Random random = new Random();
-
-        // Вийти із циклу, якщо граф зв'язний
-        do {
-            graph = new ArrayList[numVertices];
-
-            for (int i = 0; i < numVertices; i++) {
-                graph[i] = new ArrayList<>();
-            }
-
-            // Додавання ребер між випадковими вершинами
-            for (int i = 0; i < numVertices * 2; i++) {
-                int vertex1 = random.nextInt(numVertices);
-                int vertex2 = random.nextInt(numVertices);
-
-                if (vertex1 != vertex2) {
-                    addEdge(graph, vertex1, vertex2);
-                }
-            }
-
-            // Перевірка, чи граф є зв'язним
-        } while (!isConnected(graph, numVertices));
-
-        return graph;
-    }
-
-    public boolean isConnected(List<Integer>[] graph, int numVertices) {
-        boolean[] visited = new boolean[numVertices];
-        Arrays.fill(visited, false);
-
-        Queue<Integer> queue = new LinkedList<>();
-        queue.offer(0); // Почати BFS з першої вершини
-
-        while (!queue.isEmpty()) {
-            int currentVertex = queue.poll();
-            visited[currentVertex] = true;
-
-            for (int neighbor : graph[currentVertex]) {
-                if (!visited[neighbor]) {
-                    queue.offer(neighbor);
-                }
-            }
-        }
-
-        for (boolean vertexVisited : visited) {
-            if (!vertexVisited) {
-                return false; // Якщо яка-небудь вершина не відвідана, граф не є зв'язним
-            }
-        }
-
-        return true; // Всі вершини відвідані, граф є зв'язним
     }
 
 }

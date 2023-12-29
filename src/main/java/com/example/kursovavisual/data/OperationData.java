@@ -1,4 +1,4 @@
-package com.example.kursovavisual;
+package com.example.kursovavisual.data;
 
 public class OperationData {
 

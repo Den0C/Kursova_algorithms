@@ -57,7 +57,7 @@
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="422.0" prefWidth="657.0">
               <children>
-                <LineChart fx:id="lineChartForTwoAlgo" layoutX="6.0" prefHeight="682.0" prefWidth="994.0" title="Два алгоритми">
+                <LineChart fx:id="lineChartForTwoAlgo" layoutX="6.0" prefHeight="682.0" prefWidth="994.0" title="Два алгоритми, Жовтий колір - грубий перебір, Червоний колір - Тар'яна">
                   <xAxis>
                     <CategoryAxis side="BOTTOM" fx:id="xForTwoAlgo" />
                   </xAxis>
@@ -105,10 +105,12 @@
               <children>
                 <TableView fx:id="tableInfo" layoutY="7.0" prefHeight="674.0" prefWidth="1000.0">
                   <columns>
-                    <TableColumn fx:id="numVertex" prefWidth="196.8000122308731" text="Кількість вершин" />
-                    <TableColumn fx:id="numArticulationPoint" prefWidth="222.40003967285156" text="Кількість шарнірних елементів" />
-                    <TableColumn fx:id="timeTarjans" prefWidth="283.99993896484375" text="Алгоритм Тар'яна(наносекунди)" />
-                    <TableColumn fx:id="timeBrudeForce" prefWidth="290.40008544921875" text="Грубого перебору(наносекунди)" />
+                    <TableColumn fx:id="numVertex" prefWidth="110.0" text="Кількість вершин" />
+                    <TableColumn fx:id="numArticulationPoint" prefWidth="173.0" text="Кількість шарнірних елементів" />
+                    <TableColumn fx:id="timeTarjans" prefWidth="170.0" text="Тар'яна(наносекунди)" />
+                    <TableColumn fx:id="timeBrudeForce" prefWidth="153.0" text="Грубого перебору(наносекунди)" />
+                              <TableColumn fx:id="timeTarjansMilliSec" prefWidth="193.0" text="Тар'яна(мілісекунди)" />
+                              <TableColumn fx:id="timeBrudeForceMilliSec" prefWidth="200.0" text="Грубого перебору(мілісекунди)" />
                   </columns>
                 </TableView>
               </children></AnchorPane>

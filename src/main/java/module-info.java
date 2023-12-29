@@ -5,4 +5,6 @@ module com.example.kursovavisual {
                             
     opens com.example.kursovavisual to javafx.fxml;
     exports com.example.kursovavisual;
+    exports com.example.kursovavisual.data;
+    opens com.example.kursovavisual.data to javafx.fxml;
 }
